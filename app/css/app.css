@@ -1,0 +1,14 @@
+/* Some custom style. Feel free to delete this */
+h1,p {
+    font-family: menlo;
+    color: white;
+}
+.jumbotron h1 {
+    color: white;
+}
+a, a:hover {
+    color: #27ae60;
+}
+.jumbotron {
+    background-color: #34495e;
+}
