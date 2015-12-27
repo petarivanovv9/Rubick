@@ -1,4 +1,3 @@
-require "sinatra"
-require "./app"
+require File.join(File.dirname(__FILE__), 'app.rb')
 
-run Sinatra::Application
+run App.new
