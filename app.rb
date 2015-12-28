@@ -1,7 +1,8 @@
-require 'sinatra'
+# require 'sinatra'
 require 'sinatra/base'
-require "./controller"
-require "./helpers"
+
+require_relative 'helpers/init'
+require_relative 'routes/init'
 
 class App < Sinatra::Base
   set :app_file, __FILE__
