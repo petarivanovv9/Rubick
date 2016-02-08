@@ -1,5 +1,3 @@
-require 'bcrypt'
-
 module AuthenticationHelper
   def logged_in?
     session.has_key?(:user_id)
@@ -17,10 +15,7 @@ module AuthenticationHelper
   end
 
   def register(username, password)
-    # password_hash = BCrypt::Engine.hash_secret(password)
-
     user = User.create(username: username, password: password)
-    # user.save
 
     create_logged_in_session(user.id, user.username) if user.valid?
 

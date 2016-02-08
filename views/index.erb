@@ -14,12 +14,11 @@
 
 <% else %>
 
-  <p> Hello <%= params[:username] %> </p>
-
-  <%="Hello #{params[:username]}"%>
+  <p> Hello, <%= @username.capitalize %> </p>
 
     <br />
 
+  <a href="/logout"> Logout </a>
 
 
 <% end %>

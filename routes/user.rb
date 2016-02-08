@@ -1,10 +1,27 @@
 class App < Sinatra::Base
   get '/login' do
-    erb :'login'
+    if logged_in?
+      redirect to('/')
+    else
+      erb :'login'
+    end
   end
 
   get '/register' do
-    erb :'register'
+    if logged_in?
+      redirect to('/')
+    else
+      erb :'register'
+    end
+  end
+
+  get '/logout' do
+    if logged_in?
+      logout
+      redirect to('/')
+    else
+      redirect to('/')
+    end
   end
 
   include AuthenticationHelper
