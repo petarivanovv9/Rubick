@@ -1,13 +1,26 @@
+require 'bcrypt'
+
 module AuthenticationHelper
   def logged_in?
     session.has_key?(:user_id)
   end
 
   def login(username, password)
+    if not logged_in?
+      user = User.find_by(username: params[:username])
+
+      if user and user.password == password
+        create_logged_in_session(user.id, user.username)
+        user
+      end
+    end
   end
 
   def register(username, password)
+    # password_hash = BCrypt::Engine.hash_secret(password)
+
     user = User.create(username: username, password: password)
+    # user.save
 
     create_logged_in_session(user.id, user.username) if user.valid?
 

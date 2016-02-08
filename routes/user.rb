@@ -23,4 +23,16 @@ class App < Sinatra::Base
       erb :'register'
     end
   end
+
+  post '/login' do
+    redirect to('/') if logged_in?
+
+    @user = login(params[:username], params[:password])
+
+    if @user
+      redirect to('/')
+    else
+      erb :'login'
+    end
+  end
 end
