@@ -1,13 +1,21 @@
-<h1> Rubick project by Petar Ivanov </h1>
+<h1> Ruby Course Project by Petar Ivanov </h1>
 
 <p> Homepage </p>
 
 <br />
 
-<a href="/login"> Login </a>
+<% if not logged_in?  %>
 
-<br />
-<br />
-<br />
+  <a href="/login"> Login </a>
+    <br />
+    <br />
+    <br />
+  <a href="/register"> Register </a>
 
-<a href="/register"> Register </a>
+<% else %>
+
+  <p> Hello <%= params[:username] %> </p>
+
+  <%="Hello #{params[:username]}"%>
+
+<% end %>
