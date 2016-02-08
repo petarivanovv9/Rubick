@@ -19,6 +19,9 @@
     <br />
 
   <p> Your Open Groups: </p>
+    <% @user_open_groups_names.each do |name| %>
+      <li> <%= name %> </li>
+    <% end %>
 
     <br />
 
