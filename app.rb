@@ -1,5 +1,5 @@
 require 'sinatra/base'
-require 'sinatra-contrib'
+# require 'sinatra-contrib'
 require 'sinatra/activerecord'
 
 require_relative 'helpers/init'
