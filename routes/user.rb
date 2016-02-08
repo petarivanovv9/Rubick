@@ -29,7 +29,12 @@ class App < Sinatra::Base
   post '/register' do
     redirect to('/') if logged_in?
 
-    redirect to('/') if params[:password] != params[:password2]
+    redirect to('/register') if params[:password] != params[:password2]
+    redirect to('/register') if params[:password].size <= 4
+
+    # if params[:password] != params[:password2]
+    #   halt status, { message: "Wrong passwords!" }.to_json
+    # end
 
     @user = register(params[:username], params[:password])
 
