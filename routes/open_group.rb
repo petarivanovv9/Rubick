@@ -14,8 +14,11 @@ class App < Sinatra::Base
 
     if logged_in?
       # @group_name = params[:name]
+
+      # can make get_admin_id function
+
       @open_group = OpenGroup.where(name: params[:name]).take
-      admin_id = UserOpenGroup.where(open_group_id: @open_group.id).take.user_id
+      @admin_id = UserOpenGroup.where(open_group_id: @open_group.id).take.user_id
       @group_admin = User.find(admin_id).username
 
       @has_joined = joined_open_group?(session[:user_id], @open_group.id)
@@ -37,7 +40,22 @@ class App < Sinatra::Base
 
   post '/leave_open_group/:name' do
     if logged_in?
-      redirect "/open_group/#{params[:name]}"
+      @open_group = OpenGroup.where(name: params[:name]).take
+      has_joined = joined_open_group?(session[:user_id], @open_group.id)
+
+      # can make get_admin_id function
+
+      admin_id = UserOpenGroup.where(open_group_id: @open_group.id).take.user_id
+
+      if has_joined and session[:user_id] != admin_id
+        UserOpenGroup.where(
+          user_id: session[:user_id],
+          open_group_id: @open_group.id).take.destroy
+      elsif session[:user_id] == admin_id
+        # here i can delete current group
+      end
+
+      redirect to "/open_group/#{params[:name]}"
     else
       redirect to('/')
     end
@@ -55,7 +73,15 @@ class App < Sinatra::Base
         user_join.save
       end
 
-      redirect "/open_group/#{params[:name]}"
+      redirect to "/open_group/#{params[:name]}"
+    else
+      redirect to('/')
+    end
+  end
+
+  post '/delete_open_group/:name' do
+    if logged_in?
+      redirect to "/open_group/#{params[:name]}"
     else
       redirect to('/')
     end

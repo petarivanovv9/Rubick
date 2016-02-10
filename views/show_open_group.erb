@@ -18,11 +18,19 @@
 
   </form>
 
-<% else %>
+<% elsif @has_joined and @admin_id != session[:user_id] %>
 
   <form method="POST" action="/leave_open_group/<%= @open_group.name %>">
 
     <button type="submit">Leave <%= @open_group.name %> group</button>
+
+  </form>
+
+<% else %>
+
+  <form method="POST" action="/delete_open_group/<%= @open_group.name %>">
+
+    <button type="submit">Delete <%= @open_group.name %> group</button>
 
   </form>
 
