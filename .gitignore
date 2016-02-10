@@ -39,3 +39,4 @@ build/
 
 # database files
 *.db
+*.sqlite3
