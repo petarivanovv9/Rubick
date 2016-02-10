@@ -12,6 +12,10 @@ class App < Sinatra::Base
     # I can make some function to check
     # is the user has the permission to view the page
 
+    if OpenGroup.where(name: params[:name]).empty? == true
+      redirect to('/')
+    end
+
     if logged_in?
       # @group_name = params[:name]
 
@@ -19,7 +23,7 @@ class App < Sinatra::Base
 
       @open_group = OpenGroup.where(name: params[:name]).take
       @admin_id = UserOpenGroup.where(open_group_id: @open_group.id).take.user_id
-      @group_admin = User.find(admin_id).username
+      @group_admin = User.find(@admin_id).username
 
       @has_joined = joined_open_group?(session[:user_id], @open_group.id)
 
@@ -81,6 +85,20 @@ class App < Sinatra::Base
 
   post '/delete_open_group/:name' do
     if logged_in?
+      @open_group = OpenGroup.where(name: params[:name]).take
+      has_joined = joined_open_group?(session[:user_id], @open_group.id)
+
+      # can make get_admin_id function
+
+      admin_id = UserOpenGroup.where(open_group_id: @open_group.id).take.user_id
+
+      if admin_id == session[:user_id]
+        UserOpenGroup.where(
+          user_id: session[:user_id],
+          open_group_id: @open_group.id).destroy_all
+        OpenGroup.where(name: @open_group.name).take.destroy
+      end
+
       redirect to "/open_group/#{params[:name]}"
     else
       redirect to('/')
