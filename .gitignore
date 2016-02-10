@@ -36,3 +36,6 @@ build/
 
 *.swp
 *.swo
+
+# database files
+*.db
