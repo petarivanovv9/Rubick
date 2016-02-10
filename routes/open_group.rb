@@ -12,11 +12,8 @@ class App < Sinatra::Base
     # I can make some function to check
     # is the user has the permission to view the page
 
-    if OpenGroup.where(name: params[:name]).empty? == true
-      redirect to('/')
-    end
 
-    if logged_in?
+    if logged_in? and OpenGroup.where(name: params[:name]).empty? != true
       # @group_name = params[:name]
 
       # can make get_admin_id function
