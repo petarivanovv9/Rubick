@@ -8,6 +8,22 @@ class App < Sinatra::Base
     end
   end
 
+  get '/open_group/:name' do
+    # I can make some function to check
+    # is the user has the permission to view the page
+
+    if logged_in?
+      @group_name = params[:name]
+      group = OpenGroup.where(name: @group_name).take
+      user_id = UserOpenGroup.find(group.id).user_id
+      @group_admin = User.find(user_id).username
+
+      erb :show_open_group
+    else
+      redirect to('/')
+    end
+  end
+
   post '/create_open_group' do
     redirect to('/') if not logged_in?
 

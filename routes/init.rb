@@ -1,3 +1,3 @@
 require_relative 'index'
 require_relative 'user'
-require_relative 'open_groups'
+require_relative 'open_group'
