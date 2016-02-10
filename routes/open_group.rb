@@ -12,15 +12,13 @@ class App < Sinatra::Base
     # I can make some function to check
     # is the user has the permission to view the page
 
-    # user_has_joined?
-
     if logged_in?
-      @group_name = params[:name]
-      group = OpenGroup.where(name: @group_name).take
-      admin_id = UserOpenGroup.where(open_group_id: group.id).take.user_id
+      # @group_name = params[:name]
+      @open_group = OpenGroup.where(name: params[:name]).take
+      admin_id = UserOpenGroup.where(open_group_id: @open_group.id).take.user_id
       @group_admin = User.find(admin_id).username
 
-      @has_joined = joined_open_group?(session[:user_id], group.id)
+      @has_joined = joined_open_group?(session[:user_id], @open_group.id)
 
       erb :show_open_group
     else
@@ -35,6 +33,32 @@ class App < Sinatra::Base
       )
 
     not has_joined.empty?
+  end
+
+  post '/leave_open_group/:name' do
+    if logged_in?
+      redirect "/open_group/#{params[:name]}"
+    else
+      redirect to('/')
+    end
+  end
+
+  post '/join_open_group/:name' do
+    if logged_in?
+      @open_group = OpenGroup.where(name: params[:name]).take
+      has_joined = joined_open_group?(session[:user_id], @open_group.id)
+
+      if not has_joined
+        user_join = UserOpenGroup.create
+        user_join.user_id = session[:user_id]
+        user_join.open_group_id = @open_group.id
+        user_join.save
+      end
+
+      redirect "/open_group/#{params[:name]}"
+    else
+      redirect to('/')
+    end
   end
 
   post '/create_open_group' do

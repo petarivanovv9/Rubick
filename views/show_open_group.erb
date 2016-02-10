@@ -1,5 +1,33 @@
 <p> Open Group </p>
 
-<p> Welcome to <%= @group_name %> group </p>
+<p> Welcome to <%= @open_group.name %> group </p>
+
+<p> Open Group Name: <%= @open_group.name %> </p>
+<p> Open Group Description: <%= @open_group.description %> </p>
+
 
 <p> Open Group Admin's Username: <%= @group_admin %> </p>
+
+<p> -------------------------------- </p>
+
+<% if not @has_joined %>
+
+  <form method="POST" action="/join_open_group/<%= @open_group.name %>">
+
+    <button type="submit">Join <%= @open_group.name %> group</button>
+
+  </form>
+
+<% else %>
+
+  <form method="POST" action="/leave_open_group/<%= @open_group.name %>">
+
+    <button type="submit">Join <%= @open_group.name %> group</button>
+
+  </form>
+
+<% end %>
+
+<p> -------------------------------- </p>
+
+
