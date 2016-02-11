@@ -11,7 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160208191537) do
+ActiveRecord::Schema.define(version: 20160211133638) do
+
+  create_table "open_group_posts", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "open_group_id"
+    t.text    "content"
+  end
 
   create_table "open_groups", force: :cascade do |t|
     t.string "name"
