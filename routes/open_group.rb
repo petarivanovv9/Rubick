@@ -2,7 +2,7 @@ class App < Sinatra::Base
 
   get '/create_open_group' do
     if logged_in?
-      erb :create_open_group
+      erb :'open_groups/new'
     else
       redirect to('/')
     end
@@ -26,7 +26,7 @@ class App < Sinatra::Base
 
       @posts = OpenGroupPost.where(open_group_id: @open_group.id)
 
-      erb :show_open_group
+      erb :'open_groups/show'
     else
       redirect to('/')
     end
@@ -121,7 +121,7 @@ class App < Sinatra::Base
       redirect to('/')
     else
       puts "Error with open group creation."
-      erb :create_open_group
+      erb :'open_groups/new'
     end
   end
 
