@@ -1,5 +1,5 @@
 require 'sinatra/base'
-# require 'sinatra-contrib'
+require 'bundler/setup'
 require 'sinatra/activerecord'
 
 
