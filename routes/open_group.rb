@@ -99,7 +99,7 @@ class App < Sinatra::Base
     if @open_group.valid?
       join_user_to_open_group(session[:user_id], @open_group.id)
 
-      redirect to('/')
+      redirect to "open_group/#{@open_group.name}"
     else
       puts "Error with open group creation."
       erb :'open_groups/new'
