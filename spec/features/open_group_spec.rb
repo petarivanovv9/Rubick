@@ -110,4 +110,38 @@ feature 'Open Groups Functionality' do
     expect(page).to have_no_content('Leave rubyyy group')
     expect(page).to have_no_content('Delete rubyyy group')
   end
+
+  scenario 'Can leave but cannot delete open group if user is not admin' do
+    visit '/create_open_group'
+
+    fill_in 'open_group_name', with: 'rubyyy'
+    fill_in 'open_group_description', with: 'this is a test group'
+
+    click_button 'Create Open Group'
+
+    visit '/logout'
+
+    visit '/register'
+    fill_in 'username', with: 'batkata'
+    fill_in 'password', with: '123123'
+    fill_in 'password2', with: '123123'
+
+    click_button 'Register'
+
+    visit '/open_group/rubyyy'
+
+    click_button 'Join rubyyy group'
+
+    expect(page).to have_content('Leave rubyyy group')
+    expect(page).to have_no_content('Delete rubyyy group')
+  end
+
+  scenario 'Shows open group name on index page after joining it' do
+  end
+
+  scenario 'Doen\'t show open group name on index page after leaving it' do
+  end
+
+  scenario 'When admin delete open group all members automatically leave it and its name is not on user\'s index pages' do
+  end
 end
