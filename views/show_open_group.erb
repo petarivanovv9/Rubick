@@ -40,12 +40,14 @@
 
 <h3> Posts </h3>
 
-<div>
-  <form  method="POST" action="/open_group/<%= @open_group.name %>/post">
-    <textarea name="open_group_post_content" placeholder="New Post"></textarea>
-    <button type="submit">Create Post</button>
-  </form>
-</div>
+<% if @has_joined %>
+  <div>
+    <form  method="POST" action="/open_group/<%= @open_group.name %>/post">
+      <textarea name="open_group_post_content" placeholder="New Post"></textarea>
+      <button type="submit">Create Post</button>
+    </form>
+  </div>
+<% end %>
 
 <br />
 

@@ -95,6 +95,7 @@ class App < Sinatra::Base
         UserOpenGroup.where(
           user_id: session[:user_id],
           open_group_id: @open_group.id).destroy_all
+        OpenGroupPost.where(open_group_id: @open_group.id).destroy_all
         OpenGroup.where(name: @open_group.name).take.destroy
       end
 
