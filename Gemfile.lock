@@ -23,10 +23,13 @@ GEM
     minitest (5.8.4)
     multi_json (1.11.2)
     rack (1.6.4)
+    rack-flash3 (1.0.5)
+      rack
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
+    rake (10.5.0)
     sinatra (1.4.6)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -52,6 +55,8 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt
+  rack-flash3
+  rake
   sinatra
   sinatra-activerecord
   sinatra-contrib
