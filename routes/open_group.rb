@@ -1,5 +1,7 @@
 class App < Sinatra::Base
 
+  include OpenGroupHelper
+
   get '/create_open_group' do
     if logged_in?
       erb :'open_groups/new'
@@ -13,13 +15,12 @@ class App < Sinatra::Base
     # is the user has the permission to view the page
 
 
-    if logged_in? and OpenGroup.where(name: params[:name]).empty? != true
-      # @group_name = params[:name]
+    if logged_in? and get_open_group(params[:name]).empty? != true
 
       # can make get_admin_id function
 
-      @open_group = OpenGroup.where(name: params[:name]).take
-      @admin_id = UserOpenGroup.where(open_group_id: @open_group.id).take.user_id
+      @open_group = get_open_group(params[:name]).take
+      @admin_id = get_open_group_admin_id(@open_group.id)
       @group_admin = User.find(@admin_id).username
 
       @has_joined = joined_open_group?(session[:user_id], @open_group.id)
@@ -32,30 +33,17 @@ class App < Sinatra::Base
     end
   end
 
-  def joined_open_group?(user_id, open_group_id)
-    has_joined = UserOpenGroup.where(
-      user_id: user_id,
-      open_group_id: open_group_id
-      )
-
-    not has_joined.empty?
-  end
-
   post '/leave_open_group/:name' do
     if logged_in?
-      @open_group = OpenGroup.where(name: params[:name]).take
+      @open_group = get_open_group(params[:name]).take
       has_joined = joined_open_group?(session[:user_id], @open_group.id)
 
       # can make get_admin_id function
 
-      admin_id = UserOpenGroup.where(open_group_id: @open_group.id).take.user_id
+      admin_id = get_open_group_admin_id(@open_group.id)
 
       if has_joined and session[:user_id] != admin_id
-        UserOpenGroup.where(
-          user_id: session[:user_id],
-          open_group_id: @open_group.id).take.destroy
-      elsif session[:user_id] == admin_id
-        # here i can delete current group
+        delete_user_open_group_relations(session[:user_id], @open_group.id)
       end
 
       redirect to "/open_group/#{params[:name]}"
@@ -66,14 +54,11 @@ class App < Sinatra::Base
 
   post '/join_open_group/:name' do
     if logged_in?
-      @open_group = OpenGroup.where(name: params[:name]).take
+      @open_group = get_open_group(params[:name]).take
       has_joined = joined_open_group?(session[:user_id], @open_group.id)
 
       if not has_joined
-        user_join = UserOpenGroup.create
-        user_join.user_id = session[:user_id]
-        user_join.open_group_id = @open_group.id
-        user_join.save
+        join_user_to_open_group(session[:user_id], @open_group.id)
       end
 
       redirect to "/open_group/#{params[:name]}"
@@ -84,17 +69,16 @@ class App < Sinatra::Base
 
   post '/delete_open_group/:name' do
     if logged_in?
-      @open_group = OpenGroup.where(name: params[:name]).take
+      @open_group = get_open_group(params[:name]).take
       has_joined = joined_open_group?(session[:user_id], @open_group.id)
 
       # can make get_admin_id function
 
-      admin_id = UserOpenGroup.where(open_group_id: @open_group.id).take.user_id
+      admin_id = get_open_group_admin_id(@open_group.id)
 
       if admin_id == session[:user_id]
-        UserOpenGroup.where(
-          user_id: session[:user_id],
-          open_group_id: @open_group.id).destroy_all
+        delete_user_open_group_relations(session[:user_id], @open_group.id)
+
         OpenGroupPost.where(open_group_id: @open_group.id).destroy_all
         OpenGroup.where(name: @open_group.name).take.destroy
       end
@@ -113,10 +97,7 @@ class App < Sinatra::Base
       description: params[:open_group_description])
 
     if @open_group.valid?
-      user_join = UserOpenGroup.create
-      user_join.user_id = session[:user_id]
-      user_join.open_group_id = @open_group.id
-      user_join.save
+      join_user_to_open_group(session[:user_id], @open_group.id)
 
       redirect to('/')
     else
@@ -127,15 +108,12 @@ class App < Sinatra::Base
 
   post '/open_group/:name/post' do
     if logged_in?
-      @open_group = OpenGroup.where(name: params[:name]).take
+      @open_group = get_open_group(params[:name]).take
       has_joined = joined_open_group?(session[:user_id], @open_group.id)
 
       if has_joined
-        open_group_post = OpenGroupPost.create
-        open_group_post.user_id = session[:user_id]
-        open_group_post.open_group_id = @open_group.id
-        open_group_post.content = params[:open_group_post_content]
-        open_group_post.save
+        create_open_group_post(session[:user_id],
+          @open_group.id, params[:open_group_post_content])
       end
 
     redirect to "open_group/#{params[:name]}"

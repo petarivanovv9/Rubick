@@ -1,4 +1,7 @@
 class App < Sinatra::Base
+
+  include AuthenticationHelper
+
   get '/login' do
     if logged_in?
       redirect to('/')
@@ -23,8 +26,6 @@ class App < Sinatra::Base
       redirect to('/')
     end
   end
-
-  include AuthenticationHelper
 
   post '/register' do
     redirect to('/') if logged_in?
