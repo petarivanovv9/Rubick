@@ -1,5 +1,3 @@
-require 'sinatra/activerecord'
-
 class OpenGroup < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
   validates :description, presence: true

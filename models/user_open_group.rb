@@ -1,5 +1,3 @@
-require 'sinatra/activerecord'
-
 class UserOpenGroup < ActiveRecord::Base
   validates :user_id, presence: true
   validates :open_group_id, presence: true
