@@ -7,5 +7,9 @@ gem 'sqlite3'
 gem 'bcrypt'
 gem 'rake'
 gem 'rack-flash3'
-gem 'capybara'
-gem 'rspec'
+
+group :test do
+  gem 'capybara'
+  gem 'rspec'
+  gem 'observr'
+end

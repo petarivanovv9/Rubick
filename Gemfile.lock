@@ -37,6 +37,7 @@ GEM
     multi_json (1.11.2)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
+    observr (1.0.5)
     rack (1.6.4)
     rack-flash3 (1.0.5)
       rack
@@ -86,6 +87,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt
   capybara
+  observr
   rack-flash3
   rake
   rspec

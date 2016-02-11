@@ -3,9 +3,7 @@ require_relative '../spec_helper.rb'
 feature 'Logging in' do
   around(:each) do |example|
     ActiveRecord::Base.connection.transaction do
-      user = User.create(
-        username: 'peshko123',
-        password: '123123')
+      user = User.create(username: 'peshko123', password: '123123')
 
       example.run
 
