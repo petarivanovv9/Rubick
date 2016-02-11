@@ -3,7 +3,7 @@ class App < Sinatra::Base
     if logged_in?
       redirect to('/')
     else
-      erb :'login'
+      erb :'auth/login'
     end
   end
 
@@ -11,7 +11,7 @@ class App < Sinatra::Base
     if logged_in?
       redirect to('/')
     else
-      erb :'register'
+      erb :'auth/register'
     end
   end
 
@@ -42,7 +42,7 @@ class App < Sinatra::Base
     if @user.valid?
       redirect to('/')
     else
-      erb :'register'
+      erb :'auth/register'
     end
   end
 
@@ -54,7 +54,7 @@ class App < Sinatra::Base
     if @user
       redirect to('/')
     else
-      erb :'login'
+      erb :'auth/login'
     end
   end
 end
