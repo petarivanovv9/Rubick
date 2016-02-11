@@ -1,6 +1,6 @@
-<p> Open Group </p>
+<h1> Open Group </h1>
 
-<p> Welcome to <%= @open_group.name %> group </p>
+<h2> Welcome to <%= @open_group.name %> group </h2>
 
 <p> Open Group Name: <%= @open_group.name %> </p>
 <p> Open Group Description: <%= @open_group.description %> </p>
@@ -38,4 +38,21 @@
 
 <p> -------------------------------- </p>
 
+<h3> Posts </h3>
 
+<div>
+  <form  method="POST" action="/open_group/<%= @open_group.name %>/post">
+    <textarea name="open_group_post_content" placeholder="New Post"></textarea>
+    <button type="submit">Create Post</button>
+  </form>
+</div>
+
+<br />
+
+<% @posts.reverse.each do |post| %>
+  <div style="width:800px;border-radius:25px;border-style:groove; text-align:center">
+    <p> Posted by <%= User.find(post.user_id).username %>
+    <br />
+    <%= post.content %> </p>
+  </div>
+<% end %>

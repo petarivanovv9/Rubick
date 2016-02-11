@@ -24,6 +24,8 @@ class App < Sinatra::Base
 
       @has_joined = joined_open_group?(session[:user_id], @open_group.id)
 
+      @posts = OpenGroupPost.where(open_group_id: @open_group.id)
+
       erb :show_open_group
     else
       redirect to('/')
@@ -120,5 +122,24 @@ class App < Sinatra::Base
       puts "Error with open group creation."
       erb :create_open_group
     end
+  end
+
+  post '/open_group/:name/post' do
+    if logged_in?
+      @open_group = OpenGroup.where(name: params[:name]).take
+      has_joined = joined_open_group?(session[:user_id], @open_group.id)
+
+      if has_joined
+        open_group_post = OpenGroupPost.create
+        open_group_post.user_id = session[:user_id]
+        open_group_post.open_group_id = @open_group.id
+        open_group_post.content = params[:open_group_post_content]
+        open_group_post.save
+      end
+
+    redirect to "open_group/#{params[:name]}"
+    end
+
+    redirect to('/')
   end
 end
