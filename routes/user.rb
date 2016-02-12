@@ -110,9 +110,12 @@ class App < Sinatra::Base
 
       puts type
 
+      user = User.where(id: session[:user_id]).take
+
       if type == 'image'
         File.open("./public/#{@filename}", 'wb') do |f|
           f.write(file.read)
+          user.update(avatar: @filename)
         end
 
         redirect to("/user/#{params[:username]}")

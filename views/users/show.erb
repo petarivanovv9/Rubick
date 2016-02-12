@@ -10,4 +10,6 @@
 
 <p> Avatar: </p>
 
-<img src="/me_small.jpg" />
+<% if @user.avatar != nil %>
+  <img src="/<%= @user.avatar %>" />
+<% end %>
