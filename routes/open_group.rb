@@ -20,6 +20,8 @@ class App < Sinatra::Base
 
       @posts = OpenGroupPost.where(open_group_id: @open_group.id)
 
+      @group_members = UserOpenGroup.where(open_group_id: @open_group.id)
+
       erb :'open_groups/show'
     else
       redirect to('/')
