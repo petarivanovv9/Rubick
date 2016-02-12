@@ -58,4 +58,12 @@ class App < Sinatra::Base
       erb :'auth/login'
     end
   end
+
+  get '/user/:username' do
+    if logged_in?
+      erb :'users/show'
+    else
+      redirect to('/')
+    end
+  end
 end
