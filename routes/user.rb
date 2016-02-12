@@ -102,14 +102,9 @@ class App < Sinatra::Base
 
   post '/user/:username/upload_image' do
     if logged_in?
-      puts params
-
       @filename = params[:file][:filename]
       file = params[:file][:tempfile]
       type = params[:file][:type].split('/').first
-
-      puts type
-
       user = User.where(id: session[:user_id]).take
 
       if type == 'image'
