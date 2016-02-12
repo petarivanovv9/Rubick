@@ -120,7 +120,7 @@ class App < Sinatra::Base
 
         redirect to("/user/#{params[:username]}")
       else
-        redirect to("/user/#{params[:username]}")
+        redirect to("/user/#{params[:username]}/edit")
       end
     else
       redirect to('/')
