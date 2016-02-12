@@ -5,4 +5,6 @@ class OpenGroupPost < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :open_group
+
+  has_many :open_group_post_comments
 end

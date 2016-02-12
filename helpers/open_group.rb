@@ -37,4 +37,12 @@ module OpenGroupHelper
       open_group_id: open_group_id
     ).destroy_all
   end
+
+  def create_open_group_post_comment(user_id, open_group_post_id, content)
+    open_group_post_comment = OpenGroupPostComment.create
+    open_group_post_comment.user_id = user_id
+    open_group_post_comment.open_group_post_id = open_group_post_id
+    open_group_post_comment.content = content
+    open_group_post_comment.save
+  end
 end

@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   validates :password, presence: true, length: {in: 5..60}
 
   has_many :user_open_groups
+  has_many :open_group_post_comments
 
   include BCrypt
 

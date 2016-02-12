@@ -1,4 +1,4 @@
-class OpenGroupPostComments < ActiveRecord::Base
+class OpenGroupPostComment < ActiveRecord::Base
   validates :content, presence: true
   validates :user_id, presence: true
   validates :open_group_post_id, presence: true

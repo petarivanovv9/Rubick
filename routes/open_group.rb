@@ -128,7 +128,8 @@ class App < Sinatra::Base
       has_joined = joined_open_group?(session[:user_id], @open_group.id)
 
       if has_joined
-        puts "HELLO BABYYYYYYY"
+        create_open_group_post_comment(session[:user_id],
+          params[:id], params[:open_group_post_content])
       end
 
       redirect to "open_group/#{params[:name]}"
