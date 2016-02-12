@@ -1,4 +1,9 @@
+require 'bcrypt'
+
 module AuthenticationHelper
+
+  include BCrypt
+
   def logged_in?
     session.has_key?(:user_id)
   end
@@ -20,6 +25,10 @@ module AuthenticationHelper
     create_logged_in_session(user.id, user.username) if user.valid?
 
     user
+  end
+
+  def equal_passwords?(old_password, password)
+    old_password == password
   end
 
   def logout

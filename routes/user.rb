@@ -61,7 +61,40 @@ class App < Sinatra::Base
 
   get '/user/:username' do
     if logged_in?
+      @user = User.where(username: params[:username]).take
+
       erb :'users/show'
+    else
+      redirect to('/')
+    end
+  end
+
+  get '/user/:username/edit' do
+    if logged_in?
+      @user = User.where(username: params[:username]).take
+
+      if @user.id == session[:user_id]
+        erb :'users/edit'
+      else
+        redirect to('/')
+      end
+    else
+      redirect to('/')
+    end
+  end
+
+  post '/user/:username/update' do
+    if logged_in?
+      @user = User.where(username: params[:username]).take
+
+      if equal_passwords?(@user.password, params[:old_password]) and equal_passwords?(params[:new_password], params[:new_password2])
+
+        @user.update(password: params[:new_password])
+
+        redirect to ('/')
+      else
+        erb :'users/edit'
+      end
     else
       redirect to('/')
     end

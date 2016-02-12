@@ -1,0 +1,15 @@
+<h3> User's edit page </h3>
+
+<form  method="POST" action="/user/<%= @user.username %>/update">
+  <fieldset>
+    <legend>Update Password</legend>
+
+      <input type="password" name="old_password" autofocus="autofocus" placeholder="Old password">
+      <input type="password" name="new_password" placeholder="New password">
+      <input type="password" name="new_password2" placeholder="Repeat new password">
+
+      <div>
+        <button type="submit">Update Password</button>
+      </div>
+    </fieldset>
+</form>
