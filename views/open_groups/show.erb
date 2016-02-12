@@ -38,7 +38,7 @@
 
 <p> -------------------------------- </p>
 
-<h3> Posts </h3>
+<h3> Posts: </h3>
 
 <% if @has_joined %>
   <div>
@@ -53,17 +53,31 @@
 
 <% @posts.reverse.each do |post| %>
   <div style="width:800px;border-radius:25px;border-style:groove; text-align:center">
-    <p> Posted by <%= User.find(post.user_id).username %>
-    <br />
-    <%= post.content %> </p>
+    <p>
+      Posted by <%= User.find(post.user_id).username %>
+      <br />
+      <%= post.content %>
+    </p>
 
-    <div>
-      <form  method="POST" action="/open_group/<%= @open_group.name %>/post/<%= post.id %>">
-        <textarea name="open_group_comment_content" placeholder="New Comment"></textarea>
-        <button type="submit">Create Comment</button>
-      </form>
-    </div>
+    <% if @has_joined %>
+      <div>
+        <form  method="POST" action="/open_group/<%= @open_group.name %>/post/<%= post.id %>">
+          <textarea name="open_group_comment_content" placeholder="New Comment"></textarea>
+          <button type="submit">Create Comment</button>
+        </form>
+      </div>
+    <% end %>
 
-    <h4> Comments </h4>
+    <% @post_comments = OpenGroupPostComment.where(open_group_post_id: post.id) %>
+
+    <h4> Comments: </h4>
+    <% @post_comments.each do |comment| %>
+      <p>
+        Commented by <%= User.find(comment.user_id).username %>
+        <br />
+        <%= comment.content %>
+      </p>
+    <% end %>
+
   </div>
 <% end %>

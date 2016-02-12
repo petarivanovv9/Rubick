@@ -11,14 +11,7 @@ class App < Sinatra::Base
   end
 
   get '/open_group/:name' do
-    # I can make some function to check
-    # is the user has the permission to view the page
-
-
     if logged_in? and get_open_group(params[:name]).empty? != true
-
-      # can make get_admin_id function
-
       @open_group = get_open_group(params[:name]).take
       @admin_id = get_open_group_admin_id(@open_group.id)
       @group_admin = User.find(@admin_id).username
@@ -37,8 +30,6 @@ class App < Sinatra::Base
     if logged_in?
       @open_group = get_open_group(params[:name]).take
       has_joined = joined_open_group?(session[:user_id], @open_group.id)
-
-      # can make get_admin_id function
 
       admin_id = get_open_group_admin_id(@open_group.id)
 
@@ -71,16 +62,12 @@ class App < Sinatra::Base
     if logged_in?
       @open_group = get_open_group(params[:name]).take
       has_joined = joined_open_group?(session[:user_id], @open_group.id)
-
-      # can make get_admin_id function
-
       admin_id = get_open_group_admin_id(@open_group.id)
 
       if admin_id == session[:user_id]
         delete_user_open_group_relations(session[:user_id], @open_group.id)
 
-        OpenGroupPost.where(open_group_id: @open_group.id).destroy_all
-        OpenGroup.where(name: @open_group.name).take.destroy
+        delete_open_group(@open_group.id)
       end
 
       redirect to "/open_group/#{params[:name]}"
@@ -129,7 +116,7 @@ class App < Sinatra::Base
 
       if has_joined
         create_open_group_post_comment(session[:user_id],
-          params[:id], params[:open_group_post_content])
+          params[:id], params[:open_group_comment_content])
       end
 
       redirect to "open_group/#{params[:name]}"

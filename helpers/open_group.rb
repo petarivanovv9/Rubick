@@ -45,4 +45,15 @@ module OpenGroupHelper
     open_group_post_comment.content = content
     open_group_post_comment.save
   end
+
+  def delete_open_group(open_group_id)
+    posts = OpenGroupPost.where(open_group_id: open_group_id)
+
+    posts.each do |post|
+      OpenGroupPostComment.where(open_group_post_id: post.id).destroy_all
+    end
+
+    posts.destroy_all
+    OpenGroup.where(name: @open_group.name).destroy_all
+  end
 end
