@@ -13,3 +13,18 @@
       </div>
     </fieldset>
 </form>
+
+<br />
+<br />
+
+<form  method="POST" action="/user/<%= @user.username %>/upload_image" enctype="multipart/form-data">
+  <fieldset>
+    <legend>Image Upload</legend>
+
+      <input type="file" name="file">
+
+      <div>
+        <button type="submit">Upload Image</button>
+      </div>
+    </fieldset>
+</form>

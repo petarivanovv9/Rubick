@@ -12,4 +12,7 @@ class App < Sinatra::Base
   enable :sessions
 
   set :app_file, __FILE__
+
+  set :public_folder, File.join(File.dirname(__FILE__), 'public')
+  set :unallowed_paths, ['.', '..']
 end

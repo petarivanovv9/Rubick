@@ -99,4 +99,28 @@ class App < Sinatra::Base
       redirect to('/')
     end
   end
+
+  post '/user/:username/upload_image' do
+    if logged_in?
+      puts params
+
+      @filename = params[:file][:filename]
+      file = params[:file][:tempfile]
+      type = params[:file][:type].split('/').first
+
+      puts type
+
+      if type == 'image'
+        File.open("./public/#{@filename}", 'wb') do |f|
+          f.write(file.read)
+        end
+
+        redirect to("/user/#{params[:username]}")
+      else
+        redirect to("/user/#{params[:username]}")
+      end
+    else
+      redirect to('/')
+    end
+  end
 end

@@ -5,3 +5,9 @@
 <% if @user.id == session[:user_id] %>
   <a href="/user/<%= @user.username %>/edit"> Edit Profile </a>
 <% end %>
+
+<br />
+
+<p> Avatar: </p>
+
+<img src="/me_small.jpg" />
