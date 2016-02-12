@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160212114400) do
+ActiveRecord::Schema.define(version: 20160212190523) do
 
   create_table "open_group_post_comments", force: :cascade do |t|
     t.integer "user_id"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20160212114400) do
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "password_hash"
+    t.string "avatar"
   end
 
 end

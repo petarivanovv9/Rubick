@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   validates :username, presence: true, uniqueness: {case_sensitive: false},length: {in: 2..60}, format: { with: /\A[a-z0-9]+\z/ }
   validates :password, presence: true, length: {in: 5..60}
 
-
+  validate :avatar
 
   has_many :user_open_groups
   has_many :open_group_post_comments
