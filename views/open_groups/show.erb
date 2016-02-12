@@ -56,5 +56,14 @@
     <p> Posted by <%= User.find(post.user_id).username %>
     <br />
     <%= post.content %> </p>
+
+    <div>
+      <form  method="POST" action="/open_group/<%= @open_group.name %>/post/<%= post.id %>">
+        <textarea name="open_group_comment_content" placeholder="New Comment"></textarea>
+        <button type="submit">Create Comment</button>
+      </form>
+    </div>
+
+    <h4> Comments </h4>
   </div>
 <% end %>

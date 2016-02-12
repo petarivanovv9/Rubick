@@ -121,4 +121,19 @@ class App < Sinatra::Base
 
     redirect to('/')
   end
+
+  post '/open_group/:name/post/:id' do
+    if logged_in?
+      @open_group = get_open_group(params[:name]).take
+      has_joined = joined_open_group?(session[:user_id], @open_group.id)
+
+      if has_joined
+        puts "HELLO BABYYYYYYY"
+      end
+
+      redirect to "open_group/#{params[:name]}"
+    end
+
+    redirect to('/')
+  end
 end
