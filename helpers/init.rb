@@ -1,2 +1,3 @@
-require_relative 'authentication.rb'
-require_relative 'open_group.rb'
+require_relative 'authentication'
+require_relative 'open_group'
+require_relative 'halts'

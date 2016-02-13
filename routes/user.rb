@@ -2,6 +2,8 @@ class App < Sinatra::Base
 
   include AuthenticationHelper
 
+  include HaltHelper
+
   get '/login' do
     if logged_in?
       redirect to('/')
@@ -23,7 +25,8 @@ class App < Sinatra::Base
       logout
       redirect to('/')
     else
-      redirect to('/')
+      halt_with_message(400, "You should be logged in.")
+      # redirect to('/')
     end
   end
 
