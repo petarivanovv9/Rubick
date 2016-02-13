@@ -1,0 +1,9 @@
+<h3> Search results </h3>
+
+<% if @result.any? %>
+  <% @result.each do |group| %>
+    <%= group.name %>
+  <% end %>
+<% else %>
+  <p> Nothing found </p>
+<% end %>

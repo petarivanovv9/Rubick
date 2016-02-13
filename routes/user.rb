@@ -25,7 +25,7 @@ class App < Sinatra::Base
       logout
       redirect to('/')
     else
-      halt_with_message(400, "You should be logged in.")
+      halt_with_message(404, "You should be logged in.")
       # redirect to('/')
     end
   end
